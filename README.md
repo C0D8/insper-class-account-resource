@@ -1,1 +1,1 @@
-# insper-class-account-resource
+# platform.241.store.account-resource

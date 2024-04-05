@@ -26,7 +26,7 @@ public class AccountService {
         return accountRepository.findById(id).map(AccountModel::to).orElse(null);
     }
 
-    public Account auth(String email, String password) {
+    public Account login(String email, String password) {
         String hash = calculateHash(password);
         return accountRepository.findByEmailAndHash(email, hash).map(AccountModel::to).orElse(null);
     }
@@ -41,5 +41,5 @@ public class AccountService {
             throw new RuntimeException(e);
         }
     }
-
+    
 }

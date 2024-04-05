@@ -1,6 +1,6 @@
 spring:
   application:
-    name: store-account
+    name: classroom-account
   datasource:
     url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/store}
     username: ${DATABASE_USERNAME:store}
@@ -13,6 +13,7 @@ spring:
     properties:
       hibernate:
         default_schema: account
+
 management:
   endpoints:
     web:
@@ -20,11 +21,9 @@ management:
       exposure:
         include: [ 'prometheus' ]
 
-eureka: 
+eureka:
   client:
-    reguster-with-eureka: true
+    register-with-eureka: true
     fetch-registry: true
     service-url:
       defaultZone: ${EUREKA_URI:http://localhost:8761/eureka/}
-
-

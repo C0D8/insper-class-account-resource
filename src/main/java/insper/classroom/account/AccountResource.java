@@ -18,29 +18,29 @@ public class AccountResource implements AccountController {
     @GetMapping("/accounts/info")
     public ResponseEntity<Map<String, String>> info() {
         return new ResponseEntity<Map<String, String>>(
-                Map.ofEntries(
-                        Map.entry("microservice.name", AccountApplication.class.getSimpleName()),
-                        Map.entry("os.arch", System.getProperty("os.arch")),
-                        Map.entry("os.name", System.getProperty("os.name")),
-                        Map.entry("os.version", System.getProperty("os.version")),
-                        Map.entry("file.separator", System.getProperty("file.separator")),
-                        Map.entry("java.class.path", System.getProperty("java.class.path")),
-                        Map.entry("java.home", System.getProperty("java.home")),
-                        Map.entry("java.vendor", System.getProperty("java.vendor")),
-                        Map.entry("java.vendor.url", System.getProperty("java.vendor.url")),
-                        Map.entry("java.version", System.getProperty("java.version")),
-                        Map.entry("line.separator", System.getProperty("line.separator")),
-                        Map.entry("path.separator", System.getProperty("path.separator")),
-                        Map.entry("user.dir", System.getProperty("user.dir")),
-                        Map.entry("user.home", System.getProperty("user.home")),
-                        Map.entry("user.name", System.getProperty("user.name")),
-                        Map.entry("jar", new java.io.File(
-                                AccountApplication.class.getProtectionDomain()
-                                        .getCodeSource()
-                                        .getLocation()
-                                        .getPath()
-                        ).toString())
-                ), HttpStatus.OK
+            Map.ofEntries(
+                Map.entry("microservice.name", AccountApplication.class.getSimpleName()),
+                Map.entry("os.arch", System.getProperty("os.arch")),
+                Map.entry("os.name", System.getProperty("os.name")),
+                Map.entry("os.version", System.getProperty("os.version")),
+                Map.entry("file.separator", System.getProperty("file.separator")),
+                Map.entry("java.class.path", System.getProperty("java.class.path")),
+                Map.entry("java.home", System.getProperty("java.home")),
+                Map.entry("java.vendor", System.getProperty("java.vendor")),
+                Map.entry("java.vendor.url", System.getProperty("java.vendor.url")),
+                Map.entry("java.version", System.getProperty("java.version")),
+                Map.entry("line.separator", System.getProperty("line.separator")),
+                Map.entry("path.separator", System.getProperty("path.separator")),
+                Map.entry("user.dir", System.getProperty("user.dir")),
+                Map.entry("user.home", System.getProperty("user.home")),
+                Map.entry("user.name", System.getProperty("user.name")),
+                Map.entry("jar", new java.io.File(
+                    AccountApplication.class.getProtectionDomain()
+                        .getCodeSource()
+                        .getLocation()
+                        .getPath()
+                    ).toString())
+            ), HttpStatus.OK
         );
     }
 
@@ -52,12 +52,12 @@ public class AccountResource implements AccountController {
         account = accountService.create(account);
         // return
         return ResponseEntity.created(
-                        ServletUriComponentsBuilder
-                                .fromCurrentRequest()
-                                .path("/{id}")
-                                .buildAndExpand(account.id())
-                                .toUri())
-                .body(AccountParser.to(account));
+            ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(account.id())
+                .toUri())
+            .body(AccountParser.to(account));
     }
 
     @Override
@@ -67,8 +67,8 @@ public class AccountResource implements AccountController {
     }
 
     @Override
-    public ResponseEntity<AccountOut> auth(AuthIn in) {
-        Account account = accountService.auth(in.email(), in.password());
+    public ResponseEntity<AccountOut> login(LoginIn in) {
+        Account account = accountService.login(in.email(), in.password());
         if (account == null) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }

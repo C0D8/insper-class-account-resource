@@ -41,14 +41,14 @@ public class AccountModel {
         this.email = o.email();
         this.hash = o.hash();
     }
-
+    
     public Account to() {
         return Account.builder()
-                .id(id)
-                .name(name)
-                .email(email)
-                .hash(hash)
-                .build();
+            .id(id)
+            .name(name)
+            .email(email)
+            .hash(hash)
+            .build();
     }
-
+    
 }
