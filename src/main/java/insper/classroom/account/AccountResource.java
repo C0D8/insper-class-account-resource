@@ -9,12 +9,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
+@Tag(name = "Account Resource", description = "Account Resource")
 public class AccountResource implements AccountController {
 
     @Autowired
     private AccountService accountService;
 
+    @Operation(summary = "Info", description = "Info")
     @GetMapping("/accounts/info")
     public ResponseEntity<Map<String, String>> info() {
         return new ResponseEntity<Map<String, String>>(
@@ -45,6 +50,7 @@ public class AccountResource implements AccountController {
     }
 
     @Override
+    @Operation(summary = "Create a new account", description = "Create a new account")
     public ResponseEntity<AccountOut> create(AccountIn in) {
         // parser
         Account account = AccountParser.to(in);
@@ -61,12 +67,14 @@ public class AccountResource implements AccountController {
     }
 
     @Override
+    @Operation(summary = "Update an account", description = "Update an account")
     public ResponseEntity<AccountOut> update(String id, AccountIn in) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'update'");
     }
 
     @Override
+    @Operation(summary = "Login", description = "Login")
     public ResponseEntity<AccountOut> login(LoginIn in) {
         Account account = accountService.login(in.email(), in.password());
         if (account == null) {
@@ -76,6 +84,7 @@ public class AccountResource implements AccountController {
     }
 
     @Override
+    @Operation(summary = "Read an account", description = "Read an account")
     public ResponseEntity<AccountOut> read(String idUser, String roleUser) {
         final AccountOut account = AccountOut.builder()
             .id(idUser)
