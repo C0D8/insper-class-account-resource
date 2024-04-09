@@ -14,11 +14,11 @@ spring:
       hibernate:
         default_schema: account
 
-  springdoc:
-    api-docs:
-      path: /accounts/v3/api-docs
-    swagger-ui:
-      path: /accounts/swagger-ui.html
+springdoc:
+  api-docs:
+    path: /accounts/v3/api-docs
+  swagger-ui:
+    path: /accounts/swagger-ui.html
 
 
 management:
