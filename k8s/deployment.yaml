@@ -32,11 +32,11 @@ spec:
                   name: postgres-configmap
                   key: POSTGRES_DB
 
-            - name: POSTGRES_USER
+            - name: POSTGRES_USERNAME
               valueFrom:
                 secretKeyRef:
                   name: postgres-credentials
-                  key: POSTGRES_USER
+                  key: POSTGRES_USERNAME
 
             - name: POSTGRES_PASSWORD
               valueFrom:
