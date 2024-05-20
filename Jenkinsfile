@@ -1,43 +1,43 @@
-pipeline{
+pipeline {
     agent any
-    stages{
-        stage('Jenkis Account'){
-            steps{
-                echo 'Jankins account interface'
-            }
-        }
-        stage('Build Interface'){
-            steps{
+    environment {
+        K8S_PORT = 51971
+    }
+    stages {
+        stage('Build Account') {
+            steps {
                 build job: 'classroom.account', wait: true
             }
         }
-
-        stage('Build'){
-            steps{
+        stage('Build') { 
+            steps {
                 sh 'mvn clean package'
             }
-        }
-
-        stage('Build Image'){
-
-            steps{
-                script{
-                    account = docker.build("c0d8/account:${env.BUILD_ID}", "-f Dockerfile .")
+        }      
+        stage('Build Image') {
+            steps {
+                script {
+                    image = docker.build("c0d8/account:${env.BUILD_ID}", "-f Dockerfile .")
                 }
             }
-
         }
-
-        stage('Push Image'){
-            steps{
-                script{
-                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-credential'){
-                        account.push("${env.BUILD_ID}")
-                        account.push("latest")
+        stage('Push Image') {
+            steps {
+                script {
+                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-credential') {
+                        image.push("${env.BUILD_ID}")
+                        image.push("latest")
                     }
                 }
             }
         }
-       
+        stage('Deploy on k8s') {
+            steps {
+                withCredentials([ string(credentialsId: 'minikube-credential', variable: 'api_token') ]) {
+                    sh "kubectl --token $api_token --server https://host.docker.internal:${env.K8S_PORT}  --insecure-skip-tls-verify=true apply -f ./k8s/deployment.yaml"
+                    sh "kubectl --token $api_token --server https://host.docker.internal:${env.K8S_PORT}  --insecure-skip-tls-verify=true apply -f ./k8s/service.yaml"
+                }
+            }
+        }
     }
 }
