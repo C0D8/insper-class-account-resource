@@ -2,9 +2,9 @@ spring:
   application:
     name: classroom-account
   datasource:
-    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/store}
-    username: ${DATABASE_USERNAME:store}
-    password: ${DATABASE_PASSWORD:store123321}
+    url: jdbc:postgresql://${POSTGRES_URL}:5432/store
+    username: ${POSTGRES_USER:store}
+    password: ${POSTGRES_PASSWORD:store123321}
     driver-class-name: org.postgresql.Driver
   flyway:
     baseline-on-migrate: true
