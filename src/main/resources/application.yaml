@@ -2,7 +2,7 @@ spring:
   application:
     name: classroom-account
   datasource:
-    url: jdbc:postgresql://${POSTGRES_URL}:5432/store
+    url: jdbc:postgresql://${POSTGRES_HOST}:5432/store
     username: ${POSTGRES_USER:store}
     password: ${POSTGRES_PASSWORD:store123321}
     driver-class-name: org.postgresql.Driver
